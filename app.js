@@ -5,12 +5,18 @@ const botonLargo = document.querySelector(".app__card-button--largo");
 const botones = document.querySelectorAll(".app__card-button");
 const banner = document.querySelector(".app__image");
 const titulo = document.querySelector(".app__title");
+const screenTimer = document.querySelector("#timer");
+const textStartPause = document.querySelector("#start-pause span");
+const iconStartPause = document.querySelector(".app__card-primary-butto-icon");
 const botonStartPause = document.querySelector("#start-pause");
 const inputMusica = document.querySelector("#alternar-musica");
 const musica = new Audio("./sonidos/luna-rise-part-one.mp3");
+const pauseSong = new Audio("./sonidos/pause.mp3");
+const playSong = new Audio("./sonidos/play.wav");
+const beepSong = new Audio("./sonidos/beep.mp3");
 
 musica.loop = true;
-let seconds = 10;
+let seconds = 1500;
 let interval = null;
 
 botonStartPause.addEventListener("click", () => {
@@ -18,16 +24,19 @@ botonStartPause.addEventListener("click", () => {
 });
 
 botonCorto.addEventListener("click", () => {
+    seconds = 300;
     cambiarContexto('descanso-corto');
     botonCorto.classList.add("active");
 });
 
 botonEnfoque.addEventListener("click", () => {
+    seconds = 1500;
     cambiarContexto('enfoque');
     botonEnfoque.classList.add("active");
 });
 
 botonLargo.addEventListener("click", () => {
+    seconds = 900;
     cambiarContexto('descanso-largo');
     botonLargo.classList.add("active");
 });
@@ -42,6 +51,7 @@ inputMusica.addEventListener("change", () => {
 
 function cambiarContexto(contexto){
 
+    showTimer();
     botones.forEach(function(contexto){
         contexto.classList.remove("active");
     });
@@ -64,25 +74,40 @@ function cambiarContexto(contexto){
     }
 }
 
+function showTimer() {
+    const time = new Date(seconds * 1000);
+    const formatedTime = time.toLocaleTimeString("es-MX", {minute:'2-digit', second:'2-digit'});
+    screenTimer.innerHTML = `${formatedTime}`;
+}
+
 const timer = () => {
     if (seconds <= 0) {
-        reset();
+        beepSong.play();
         alert("Tu tiempo se acabo!!");
+        reset();
         return;
     }
+    textStartPause.textContent = "Pausar";
+    iconStartPause.setAttribute("src", "./imagenes/pause.png");
     seconds -=1;
-    console.log(seconds);
+    showTimer();
 };
 
 function startPause (){
     if (interval){
+        pauseSong.play();
         reset();
         return;
     }
+    playSong.play();
     interval = setInterval(timer, 1000);
 };
 
 function reset(){
     clearInterval(interval);
     interval = null;
+    textStartPause.textContent = "Comenzar";
+    iconStartPause.setAttribute("src", "./imagenes/play_arrow.png");
 }
+
+showTimer();

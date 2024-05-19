@@ -193,3 +193,81 @@ audioElement.currentTime = 10; // Se desplaza a los 10 segundos del audio
 audioElement.volume = 0.5; // Establece el volumen a la mitad (50%)
 COPIA EL CÓDIGO
 Recuerda que la reproducción de audio en páginas web puede resultar intrusiva para algunos usuarios, por lo tanto, úsala con moderación y siempre proporciona controles de volumen y opciones de pausa a los visitantes de tu sitio.
+
+
+
+En el proyecto Fokus, estamos utilizando algunas de las propiedades más conocidas para acceder a elementos en el DOM, como classList y innerHTML, sin embargo, existen otras igualmente importantes.
+
+¿Vamos a conocerlas?
+
+Propiedad parentNode
+
+La propiedad parentNodese utiliza para acceder al nodo padre de un elemento en el DOM. A través de ella, podemos navegar por el árbol del DOM hacia el nodo padre del elemento actual.
+
+Ejemplo de uso:
+
+Supongamos que tenemos el siguiente código HTML:
+
+<div id="container">
+  <p>Este es un párrafo</p>
+</div>
+
+Ahora, podemos usar parentNode para acceder al elemento padre del párrafo:
+
+const paragraph = document.querySelector('p');
+const parentElement = paragraph.parentNode;
+
+console.log(parentElement.id); // Salida: "container"
+
+Propiedad childNodes
+
+La propiedad childNodes se utiliza para acceder a todos los nodos hijos de un elemento en el DOM. Retorna una lista de nodos, incluyendo nodos de texto y elementos HTML.
+
+Ejemplo de uso:
+
+Considerando el mismo HTML del ejemplo anterior, podemos usar childNodes para obtener todos los nodos hijos del elemento con el ID "container":
+
+const container = document.getElementById('container');
+const childNodes = container.childNodes;
+
+console.log(childNodes.length); // Salida: 1 (el nodo de texto "\n  " se considera un nodo hijo)
+console.log(childNodes[0].nodeName); // Salida: "#text"
+console.log(childNodes[1].nodeName); // Salida: "P"
+
+Propiedad nextElementSibling
+
+La propiedad nextElementSibling permite acceder al siguiente hermano (nodo adyacente) de un elemento en el DOM.
+
+Ejemplo de uso:
+
+Consideremos el siguiente HTML:
+
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+
+Ahora, podemos usar nextElementSibling para acceder al siguiente hermano de un elemento </li> :
+
+const item1 = document.querySelector('li:first-child');
+const item2 = item1.nextElementSibling;
+
+console.log(item2.textContent); // Salida: "Item 2"
+
+Propiedad previousElementSibling
+
+La propiedad previousElementSibling similar a nextElementSibling , pero permite acceder al hermano anterior (nodo adyacente) de un elemento en el DOM.
+
+Ejemplo de uso:
+
+Continuando con el ejemplo anterior, vamos a usar previousElementSibling para acceder al hermano anterior del elemento </li> que seleccionamos:
+
+const item3 = document.querySelector('li:last-child');
+const item2 = item3.previousElementSibling;
+
+console.log(item2.textContent); // Salida: "Item 2"
+
+Con estas propiedades, es posible navegar, acceder y modificar elementos HTML en una página web, haciendo que la manipulación del DOM sea una herramienta poderosa para los desarrolladores web.
+
+Es importante seguir practicando y explorando el DOM para profundizar tu conocimiento y habilidades en JavaScript.
